@@ -20,8 +20,12 @@ const saveDebug = (content, filename) => {
     _save(content, filename, dir);
 };
 
-const saveFile = (content, filename) => {
+const saveFile = (arr, filename) => {
     const dir = "output";
+    let content = "";
+    for (let item of arr) {
+        content += `${item}\n`;
+    }
     _save(content, filename, dir);
 }
 

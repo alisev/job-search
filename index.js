@@ -41,36 +41,20 @@ async function main() {
             const $ = cheerio.load(pageHTML);
             visitedURLs.push(searchURL);
 
-            //creates duplicates of found links
-            console.log($(site.itemSelector).length);
             $(site.itemSelector).each((index, element) => {
-                const hitURL = $(element).attr("href");
-                hitURLs.push(hitURL);
+                const link = $(element).attr("href").slice(4); //slicing off first 4 symbols is cv-online specific
+                const hitURL = `${site.URL}/${link}`;
+                // TODO: check if given element is desirable
+
+                if (!hitURLs.includes(hitURL)) {
+                    hitURLs.push(hitURL);
+                }
             });
         }
-        /*
-        // foreach pagination item on page grab the URL and add it to the list
-        // TODO: not much happens here yet, because we are not looking at actual job search results!
-        $(site.paginationHTML).each((index, element) => {
-            const url = $(element).attr("href"); //according to org code it would be searchURL
-            if (!visitedURLs.includes(url) && !URLs.includes(url)
-            ) {
-                URLs.push(url);
-            }
-        });
-        console.log(URLs);
-
-        // retrieving product URLs
-        /*
-        $("li.product a.woocommerce-LoopProduct-link").each((index, element) => {
-            const hitUrl = $(element).attr("href");
-            hitUrls.add(hitUrl);
-        });
-       */ 
-        
     }
+
     console.log([...hitURLs]);
-    await browser.close();
+    //save results to file
 }
 
 main()
