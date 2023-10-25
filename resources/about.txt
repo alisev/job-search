@@ -1,0 +1,26 @@
+userprefs.json - A file listing user's preferences. Can be edited to user's content.
+Its structure:
+    sites - list of sites to traverse with given search arguments
+        |_ url - base URL address to a specific site
+        |_ name - name of the site
+        |_ searchArgs - search arguments used in URL, optional
+    whitelist - list of desirable keywords - job position, company, job type, location
+    blacklist - list of undesirable keywords
+
+
+sites.json - A file listing sites supported by web crawler. Contains information for program on how to traverse them.
+Structure:
+    site - name of the site
+        |_ url - base URL address to a specific site
+        |_ requestType - indicator if site uses POST or GET
+        |_ nextPageFlag - if usesGET is true, then what data site uses to return next page of search results
+        |_ paginationHTML - CSS selector used to differentiate pagination items
+        |_ itemSelector - CSS selector used to pick job advertisments
+
+
+internal-structure.png - A quickly thrown together diagram.
+
+---
+
+Other notes:
+    cv-online - Crawling is done by taking advantage of search being a GET request. Pagination items are not used because they are buttons and are without href attribute.

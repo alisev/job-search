@@ -1,0 +1,9 @@
+{
+    "cv-online": {
+        "url": "https://cv.lv/lv",
+        "requestType": "GET",
+        "nextPageFlag": "offset",
+        "paginationHTML": ".pagination__link button",
+        "itemSelector": ".vacancy-item a"
+    }
+}
