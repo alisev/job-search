@@ -41,12 +41,11 @@ async function main() {
             const $ = cheerio.load(pageHTML);
             visitedURLs.push(searchURL);
 
-            save.debug(pageHTML, "debugHTML", "debugFiles");
-
-            //still not finding anything
+            //creates duplicates of found links
+            console.log($(site.itemSelector).length);
             $(site.itemSelector).each((index, element) => {
                 const hitURL = $(element).attr("href");
-                hitURLs.add(hitURL);
+                hitURLs.push(hitURL);
             });
         }
         /*
