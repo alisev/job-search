@@ -2,12 +2,14 @@
 class StructedURL {
     #baseURL;
     #name;
+    #requestType;
     #searchArgs;
     //#paginationHTML;
 
-    constructor (site) {
+    constructor (site, requestType = null) {
         this.#baseURL = site.url;
         this.#name = site.name;
+        this.#requestType = requestType;
         this.#searchArgs = site.searchArgs;
         //const siteInfo = siteInfos[this.#name];
         //this.#paginationHTML = siteInfo.paginationHTML;
@@ -28,6 +30,10 @@ class StructedURL {
 
     get name () {
         return this.#name;
+    }
+
+    get requestType () {
+        return this.#requestType;
     }
 
     get searchArgs () {

@@ -5,9 +5,9 @@
         "nextPageFlag": "offset",
         "paginationHTML": null,
         "selectors": {
-            "item": ".vacancy-item__main",
+            "item": ".vacancy-item",
             "title": ".vacancy-item__title",
-            "company": ".vacancy-item__column",
+            "company": ".vacancy-item__column a",
             "location": ".vacancy-item__locations"
         }
     }

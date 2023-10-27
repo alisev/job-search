@@ -43,7 +43,7 @@ async function main() {
             const $ = cheerio.load(pageHTML);
             visitedURLs.push(searchURL);
             
-            const foundVacancies = selectVacancies($, site);
+            const foundVacancies = site.selectVacancies($, whitelist, blacklist);
             hitURLs.push(foundVacancies); // TODO: flatten array before retuning it
         }
     }

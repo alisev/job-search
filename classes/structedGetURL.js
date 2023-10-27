@@ -2,19 +2,51 @@ const siteInfos = require("../resources/siteinfo.json");
 const StructedURL = require("./structedURL.js");
 
 class StructedGetURL extends StructedURL {
-    offset;
-    #requestType;
     #nextPageFlag;
-    #selectors;
+    #selectors; // dict, contains item, title, company, location
+    offset;
 
     constructor (site, offset = 0) {
-        super(site, offset);
-
-        const siteInfo = siteInfos[super.name];
-        this.#requestType = "GET";
-        this.#nextPageFlag = siteInfo.nextPageFlag;
-        this.#selectors = siteInfo.selectors;
+        super(site, "GET");
+        this.#nextPageFlag = siteInfos[super.name].nextPageFlag;
+        this.#selectors = siteInfos[super.name].selectors;
         this.offset = offset;
+    }
+
+    // helper function for selectVacancies
+    // iterates through selector dictionary and creates a search string
+    #createSearchString (element, $) {
+        let searchStr = "";
+        for (let sel in this.#selectors) {
+            if (sel === "item") continue;
+            searchStr += `${$(element).find(this.#selectors[sel]).text()}*`;
+        }
+        return searchStr;
+    }
+
+    // gets URL to vacancy offer
+    #getVacancyURL ($) {
+        const link = $(element).attr("href").slice(4); //TODO: slicing off first 4 symbols is cv-online specific
+        const hitURL = `${super.URL}/${link}`;
+        return hitURL;
+    }
+
+    // checks if string contains only desired keywords
+    #hasDesiredKeywords (searchStr, whitelist, blacklist) {
+        const containsWhite = whitelist.some(keyword => searchStr.includes(keyword));
+        const containsBlack = blacklist.some(keyword => searchStr.includes(keyword));
+        return (containsWhite && !containsBlack);
+    }
+
+    // creates a list of paginationed links with help of searchArgs
+    getPaginations (maxPages) {
+        const paginations = [];
+        for (let i = 0; i < maxPages; i++) {
+            const url = this.getSearchURL();
+            paginations.push(url);
+            this.increaseOffset();
+        }
+        return paginations;
     }
 
     // combines the URL of the site with provided search arguments
@@ -30,26 +62,28 @@ class StructedGetURL extends StructedURL {
         return searchURL;
     }
 
-    // creates a list of paginationed links with help of searchArgs
-    getPaginations (maxPages) {
-        const paginations = [];
-        for (let i = 0; i < maxPages; i++) {
-            const url = this.getSearchURL();
-            paginations.push(url);
-            this.increaseOffset();
-        }
-        return paginations;
-    }
-
     // increases offset, so next page of results can be returned
     increaseOffset () {
         const resultSize = super.searchArgs.limit; // TODO: limit property is cv-online specific, other sites may operate differently
         this.offset += resultSize;
     }
 
+    // selects vacancy items from the DOM
+    selectVacancies ($, whitelist, blacklist) {
+        const correspondingURLs = [];
+        $(this.#selectors.item).each((index, element) => {
+            const searchStr = this.#createSearchString(element, $);
+            if (this.#hasDesiredKeywords(searchStr, whitelist, blacklist)) {
+                const hitURL = this.#getVacancyURL($);
+                correspondingURLs.push(hitURL);
+            }
+        });
+        return correspondingURLs;
+    }
+
     // returns read-only fields
     get requestType () {
-        return this.#requestType;
+        return "GET";
     }
 
     get nextPageFlag () {
