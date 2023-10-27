@@ -1,0 +1,43 @@
+{
+    "sites": [
+            {
+                "url": "https://cv.lv/lv",
+                "name": "cv-online",
+                "searchArgs": {
+                    "limit": 20,
+                    "categories[0]": "INFORMATION_TECHNOLOGY",
+                    "fuzzy": true,
+                    "suitableForRefugees": false,
+                    "isHourlySalary": false,
+                    "isRemoteWork": false,
+                    "isQuickApply": false
+                }
+            }
+    ],
+    "whitelist": [
+        "front-end",
+        "frontend",
+        "front end",
+        "back-end",
+        "backend",
+        "back end",
+        "web",
+        "izstrādātājs",
+        "developer",
+        "software",
+        "programmer",
+        "programmētājs"
+    ],
+    "blacklist": [
+        "senior",
+        "seniors",
+        "vecākais",
+        "lead",
+        "vadītājs",
+        "manager",
+        "menedžeris",
+        "klientu",
+        "sales",
+        "pārdošanas"
+    ]
+}
