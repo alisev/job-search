@@ -25,7 +25,7 @@ class StructedGetURL extends StructedURL {
     }
 
     // gets URL to vacancy offer
-    #getVacancyURL ($) {
+    #getVacancyURL (element, $) {
         const link = $(element).attr("href").slice(4); //TODO: slicing off first 4 symbols is cv-online specific
         const hitURL = `${super.URL}/${link}`;
         return hitURL;
@@ -33,6 +33,7 @@ class StructedGetURL extends StructedURL {
 
     // checks if string contains only desired keywords
     #hasDesiredKeywords (searchStr, whitelist, blacklist) {
+        searchStr = searchStr.toLowerCase();
         const containsWhite = whitelist.some(keyword => searchStr.includes(keyword));
         const containsBlack = blacklist.some(keyword => searchStr.includes(keyword));
         return (containsWhite && !containsBlack);
@@ -74,7 +75,7 @@ class StructedGetURL extends StructedURL {
         $(this.#selectors.item).each((index, element) => {
             const searchStr = this.#createSearchString(element, $);
             if (this.#hasDesiredKeywords(searchStr, whitelist, blacklist)) {
-                const hitURL = this.#getVacancyURL($);
+                const hitURL = this.#getVacancyURL(element, $);
                 correspondingURLs.push(hitURL);
             }
         });

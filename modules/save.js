@@ -1,12 +1,12 @@
 // saves some info to file
 const fs = require('fs');
 
-const _save = (content, filename, folder) => {
+const _save = (content, filename, folder) => { // TODO: everything is seemingly right, but nothing is written to files!
     const d = new Date();
     const timestamp = d.getTime();
 
     const filepath = `./${folder}/${filename}-${timestamp}.txt`;
-    fs.writeFile(filepath, content, { flag: 'a' }, err => {
+    fs.writeFile(filepath, content, { flag: 'w' }, err => {
         if (err) {
             console.error('Error writing to file:', err);
         } else {
@@ -22,7 +22,7 @@ const saveDebug = (content, filename) => {
 };
 
 // saves found vacancies
-const saveVacancy = (arr, filename) => {
+const saveVacancies = (arr, filename) => {
     const dir = "output";
     let content = "";
     for (let item of arr) {
@@ -33,5 +33,5 @@ const saveVacancy = (arr, filename) => {
 
 module.exports = {
     debug: saveDebug,
-    vacancy: saveVacancy
+    vacancies: saveVacancies
 };

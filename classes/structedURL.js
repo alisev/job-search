@@ -4,15 +4,12 @@ class StructedURL {
     #name;
     #requestType;
     #searchArgs;
-    //#paginationHTML;
 
     constructor (site, requestType = null) {
         this.#baseURL = site.url;
         this.#name = site.name;
         this.#requestType = requestType;
         this.#searchArgs = site.searchArgs;
-        //const siteInfo = siteInfos[this.#name];
-        //this.#paginationHTML = siteInfo.paginationHTML;
     }
 
     getSearchURL () {

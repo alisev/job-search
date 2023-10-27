@@ -1,19 +1,15 @@
 const userPrefs = require("./resources/userprefs.json");
 const constructURLobject = require("./modules/constructURLobject.js");
-const selectVacancies = require("./modules/selectVacancies.js");
 const save = require("./modules/save.js");
 const puppeteer = require('puppeteer');
 const cheerio = require("cheerio");
 
 async function main() {
-    // list of sites
     const sites = userPrefs.sites; // list of site objects from .json file
-    //const URLs = getUrls(userPrefs.sites); // list of URLs only
 
     // list of URLs that match given keywords
-    const visitedURLs = [];
     const hitURLs = [];
-    const maxPages = 2;
+    const maxPages = 5;
     
     // keyword lists
     const whitelist = userPrefs.whitelist;
@@ -39,16 +35,16 @@ async function main() {
             const searchURL = paginations.pop();
             await browserPage.goto(searchURL);
             await browserPage.waitForSelector(site.selectors.item);
+
             const pageHTML = await browserPage.content();
             const $ = cheerio.load(pageHTML);
-            visitedURLs.push(searchURL);
             
             const foundVacancies = site.selectVacancies($, whitelist, blacklist);
-            hitURLs.push(foundVacancies); // TODO: flatten array before retuning it
+            hitURLs.push(...foundVacancies); // TODO: flatten array before retuning it
         }
     }
-    console.log([...hitURLs]);
-    //TODO: save results to file
+    save.vacancies(hitURLs, "found");
+    //browser.close(); // TODO: Terminal reports its already closed
 }
 
 main()

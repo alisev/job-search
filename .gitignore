@@ -130,6 +130,7 @@ dist
 .pnp.*
 
 # private files
+backups/
 resources/userprefs.json
 debugFiles/
 output/
