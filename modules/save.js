@@ -15,12 +15,14 @@ const _save = (content, filename, folder) => {
     });
 };
 
+// saves debug files as-is (contentwise)
 const saveDebug = (content, filename) => {
     const dir = "debugFiles";
     _save(content, filename, dir);
 };
 
-const saveFile = (arr, filename) => {
+// saves found vacancies
+const saveVacancy = (arr, filename) => {
     const dir = "output";
     let content = "";
     for (let item of arr) {
@@ -31,5 +33,5 @@ const saveFile = (arr, filename) => {
 
 module.exports = {
     debug: saveDebug,
-    file: saveFile
+    vacancy: saveVacancy
 };

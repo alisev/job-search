@@ -1,5 +1,6 @@
 const userPrefs = require("./resources/userprefs.json");
 const constructURLobject = require("./modules/constructURLobject.js");
+const selectVacancies = require("./modules/selectVacancies.js");
 const save = require("./modules/save.js");
 const puppeteer = require('puppeteer');
 const cheerio = require("cheerio");
@@ -23,6 +24,7 @@ async function main() {
     const browserPage = await browser.newPage();
 
     //iterates through list of URLs
+    // the two while functions make a linear n*maxPages time complexity
     while (sites.length !== 0) {
         // actual webcrawling happens here
         // foreach site get pagination URLs
@@ -36,25 +38,17 @@ async function main() {
             // and wait for page to be fully loaded
             const searchURL = paginations.pop();
             await browserPage.goto(searchURL);
-            await browserPage.waitForSelector(site.itemSelector);
+            await browserPage.waitForSelector(site.selectors.item);
             const pageHTML = await browserPage.content();
             const $ = cheerio.load(pageHTML);
             visitedURLs.push(searchURL);
-
-            $(site.itemSelector).each((index, element) => {
-                const link = $(element).attr("href").slice(4); //slicing off first 4 symbols is cv-online specific
-                const hitURL = `${site.URL}/${link}`;
-                // TODO: check if given element is desirable
-
-                if (!hitURLs.includes(hitURL)) {
-                    hitURLs.push(hitURL);
-                }
-            });
+            
+            const foundVacancies = selectVacancies($, site);
+            hitURLs.push(foundVacancies); // TODO: flatten array before retuning it
         }
     }
-
     console.log([...hitURLs]);
-    //save results to file
+    //TODO: save results to file
 }
 
 main()

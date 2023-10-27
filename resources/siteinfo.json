@@ -3,7 +3,12 @@
         "url": "https://cv.lv/lv",
         "requestType": "GET",
         "nextPageFlag": "offset",
-        "paginationHTML": ".pagination__link button",
-        "itemSelector": ".vacancy-item"
+        "paginationHTML": null,
+        "selectors": {
+            "item": ".vacancy-item__main",
+            "title": ".vacancy-item__title",
+            "company": ".vacancy-item__column",
+            "location": ".vacancy-item__locations"
+        }
     }
 }

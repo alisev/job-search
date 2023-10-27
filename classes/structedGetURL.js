@@ -5,7 +5,7 @@ class StructedGetURL extends StructedURL {
     offset;
     #requestType;
     #nextPageFlag;
-    #itemSelector;
+    #selectors;
 
     constructor (site, offset = 0) {
         super(site, offset);
@@ -13,7 +13,7 @@ class StructedGetURL extends StructedURL {
         const siteInfo = siteInfos[super.name];
         this.#requestType = "GET";
         this.#nextPageFlag = siteInfo.nextPageFlag;
-        this.#itemSelector = siteInfo.itemSelector;
+        this.#selectors = siteInfo.selectors;
         this.offset = offset;
     }
 
@@ -30,7 +30,7 @@ class StructedGetURL extends StructedURL {
         return searchURL;
     }
 
-    // creates a list of paginationed links
+    // creates a list of paginationed links with help of searchArgs
     getPaginations (maxPages) {
         const paginations = [];
         for (let i = 0; i < maxPages; i++) {
@@ -43,7 +43,7 @@ class StructedGetURL extends StructedURL {
 
     // increases offset, so next page of results can be returned
     increaseOffset () {
-        const resultSize = super.searchArgs.limit; // TODO: limit property is cv-online specific
+        const resultSize = super.searchArgs.limit; // TODO: limit property is cv-online specific, other sites may operate differently
         this.offset += resultSize;
     }
 
@@ -56,8 +56,8 @@ class StructedGetURL extends StructedURL {
         return this.#nextPageFlag;
     }
 
-    get itemSelector () {
-        return this.#itemSelector;
+    get selectors () {
+        return this.#selectors;
     }
 }
 
