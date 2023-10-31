@@ -9,7 +9,7 @@ async function main() {
 
     // list of URLs that match given keywords
     const hitURLs = [];
-    const maxPages = 2;
+    const maxPages = 10;
     
     // keyword lists
     const whitelist = userPrefs.whitelist;
@@ -42,8 +42,7 @@ async function main() {
             hitURLs.push(...foundVacancies);
         }
     }
-    //console.log(hitURLs);
-    //save.vacancies(hitURLs, "found");
+    save.vacancies(hitURLs, "found");
     //browser.close(); // TODO: Terminal reports its already closed
 }
 

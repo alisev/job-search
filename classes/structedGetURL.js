@@ -34,7 +34,7 @@ class StructedGetURL extends StructedURL {
     }
 
     // checks if string contains only desired keywords
-    #hasDesiredKeywords (searchStr, whitelist, blacklist) {
+    #hasDesiredKeywords (searchStr, whitelist, blacklist) { // TODO: Possible issue - location filter matched with company
         searchStr = searchStr.toLowerCase();
         const containsWhite = whitelist.some(keyword => searchStr.includes(keyword));
         const containsBlack = blacklist.some(keyword => searchStr.includes(keyword));
