@@ -17,27 +17,11 @@
     "whitelist": [
         "front-end",
         "frontend",
-        "front end",
-        "back-end",
-        "backend",
-        "back end",
-        "web",
-        "izstrādātājs",
-        "developer",
-        "software",
-        "programmer",
-        "programmētājs"
+        "front end"
     ],
     "blacklist": [
-        "senior",
-        "seniors",
-        "vecākais",
         "lead",
         "vadītājs",
-        "manager",
-        "menedžeris",
-        "klientu",
-        "sales",
-        "pārdošanas"
+        "manager"
     ]
 }

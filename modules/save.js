@@ -4,9 +4,8 @@ const fs = require('fs');
 const _save = (content, filename, folder) => { // TODO: everything is seemingly right, but nothing is written to files!
     const d = new Date();
     const timestamp = d.getTime();
-
     const filepath = `./${folder}/${filename}-${timestamp}.txt`;
-    fs.writeFile(filepath, content, { flag: 'w' }, err => {
+    fs.writeFileSync(filepath, content, { flag: 'w' }, err => {
         if (err) {
             console.error('Error writing to file:', err);
         } else {

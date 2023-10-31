@@ -9,7 +9,7 @@ async function main() {
 
     // list of URLs that match given keywords
     const hitURLs = [];
-    const maxPages = 5;
+    const maxPages = 2;
     
     // keyword lists
     const whitelist = userPrefs.whitelist;
@@ -34,16 +34,16 @@ async function main() {
             // and wait for page to be fully loaded
             const searchURL = paginations.pop();
             await browserPage.goto(searchURL);
-            await browserPage.waitForSelector(site.selectors.item);
-
+            await browserPage.waitForSelector(site.selectors.location);
             const pageHTML = await browserPage.content();
-            const $ = cheerio.load(pageHTML);
             
+            const $ = cheerio.load(pageHTML);
             const foundVacancies = site.selectVacancies($, whitelist, blacklist);
-            hitURLs.push(...foundVacancies); // TODO: flatten array before retuning it
+            hitURLs.push(...foundVacancies);
         }
     }
-    save.vacancies(hitURLs, "found");
+    //console.log(hitURLs);
+    //save.vacancies(hitURLs, "found");
     //browser.close(); // TODO: Terminal reports its already closed
 }
 

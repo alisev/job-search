@@ -14,11 +14,12 @@ class StructedGetURL extends StructedURL {
     }
 
     // helper function for selectVacancies
-    // iterates through selector dictionary and creates a search string
+    // selects elements and return their values
+    // returns empty string if there is no text to select
     #createSearchString (element, $) {
         let searchStr = "";
         for (let sel in this.#selectors) {
-            if (sel === "item") continue;
+            if (sel === "item" || sel === "link") continue;
             searchStr += `${$(element).find(this.#selectors[sel]).text()}*`;
         }
         return searchStr;
@@ -26,7 +27,8 @@ class StructedGetURL extends StructedURL {
 
     // gets URL to vacancy offer
     #getVacancyURL (element, $) {
-        const link = $(element).attr("href").slice(4); //TODO: slicing off first 4 symbols is cv-online specific
+        const link = $(element).find(this.#selectors.link).attr("href").slice(4); //TODO: slicing off first 4 symbols is cv-online specific
+        //const link = $(element).attr("href").slice(4); 
         const hitURL = `${super.URL}/${link}`;
         return hitURL;
     }

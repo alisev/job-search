@@ -5,7 +5,8 @@
         "nextPageFlag": "offset",
         "paginationHTML": null,
         "selectors": {
-            "item": ".vacancy-item",
+            "item": ".vacancies-list__item",
+            "link": ".vacancy-item",
             "title": ".vacancy-item__title",
             "company": ".vacancy-item__column a",
             "location": ".vacancy-item__locations"

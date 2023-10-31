@@ -8,6 +8,8 @@ const constructURLobject = (site, offset = 0) => {
     let obj;
     if (requestType === "GET") {
         obj = new StructedGetURL(site, offset);
+    } else {
+        throw new Error(`Method not implemented or supported: On constructURLobject() received requestType=${requestType}.`); // TODO: test it out
     }
     // TODO: add POST version
     return obj;
