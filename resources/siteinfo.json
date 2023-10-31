@@ -11,5 +11,19 @@
             "company": ".vacancy-item__column a",
             "location": ".vacancy-item__locations"
         }
+    },
+    "NVA": {
+        "url": "https://cvvp.nva.gov.lv/",
+        "requestType": "POST",
+        "nextPageFlag": null,
+        "nextPageAction": "SCROLL",
+        "paginationHTML": null,
+        "selectors": {
+            "item": "tbody tr",
+            "link": ".kla_profesija_nosaukums .lazyGridRowLike",
+            "title": ".kla_profesija_nosaukums",
+            "company": ".uzn_uznemums_nosaukums",
+            "location": ".vieta"
+        }
     }
 }
